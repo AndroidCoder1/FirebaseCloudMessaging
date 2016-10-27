@@ -7,7 +7,7 @@
 .DS_Store
 /build
 /captures
-/app/google-services.json
+/google-services.json
 =======
 # Built application files
 *.apk
@@ -50,3 +50,5 @@ captures/
 # Keystore files
 *.jks
 >>>>>>> 2e04aa8ebe8863e755945c1356dca4ffb13198cd
+google-services.json
+google-services.json
