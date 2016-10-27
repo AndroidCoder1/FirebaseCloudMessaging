@@ -6,14 +6,12 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
 
 import java.util.Random;
 
-public class DetailsActivity extends AppCompatActivity {
+public class DetailsActivity extends BaseActivity {
 
     TextView detailsText;
     Intent intent;
@@ -30,15 +28,12 @@ public class DetailsActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowCustomEnabled(true);
 
-        //Get text added to notification payload
-        intent = getIntent();
-        Log.d(TAG, intent.toString());
-        setDetailsText(intent);
+        setDetailsText();
 
     }
 
-    public void setDetailsText(Intent intent) {
-        details = (intent.hasExtra("texting")) ? intent.getStringExtra("texting") : "";
+    public void setDetailsText() {
+        details = getNotificationContent(DetailsActivity.this);
         detailsText = (TextView) findViewById(R.id.textDisplay);
         detailsText.setText(details);
         //Randomise text color
@@ -55,7 +50,7 @@ public class DetailsActivity extends AppCompatActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
             //Notication broadcast recieved when app is in foreground
-            setDetailsText(intent);
+            setDetailsText();
         }
     };
 
@@ -75,6 +70,7 @@ public class DetailsActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
+        BaseActivity.clearNotificationToCache(this);
         unregisterReceiver(receiver);
     }
 
